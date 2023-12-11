@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Base.Controllers
@@ -22,6 +23,11 @@ namespace Base.Controllers
         private void OnDisable()
         {
             DisableController();
+        }
+
+        private void Start()
+        {
+            StartController();
         }
     }
 }
