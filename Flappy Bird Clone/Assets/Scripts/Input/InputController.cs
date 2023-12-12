@@ -42,7 +42,6 @@ namespace Input
 
         private void StartInput(InputAction.CallbackContext context)
         {
-            Debug.Log("Touch started!");
             if (OnInputHappened != null) { OnInputHappened(); }
         }
     }
