@@ -1,0 +1,34 @@
+﻿@startuml
+'https://plantuml.com/sequence-diagram
+abstract class "ControllerBase"
+{
+    # abstract AwakeController()
+    # abstract EnableController()
+    # abstract DisableController()
+    # abstract StartController()
+    -Awake()
+    -OnEnable()
+    -OnDisable()
+}
+
+class InputController
+{
+    -_inputControls
+    #AwakeController()
+    #EnableController()
+    #DisableController()
+    #StartController()
+    +OnInputHappened()
+    -StartInput(InputAction.CallbackContext context)
+}
+class GameController
+class SFXController
+
+GameController <-- ControllerBase
+InputController <-- ControllerBase
+SFXController <-- ControllerBase
+
+GameController <-- InputController
+GameController <-- SFXController
+
+@enduml
