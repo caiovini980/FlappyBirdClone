@@ -8,24 +8,24 @@ namespace Player
     public class PlayerBehaviour : MonoBehaviour
     {
         [SerializeField] private PlayerInfo playerInfo;
-
-        private InputController _inputController;
+        [SerializeField] private GameObject inputControllerObject;
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _physicsComponent;
+        private InputController _inputController;
 
         private void Awake()
         {
-            _inputController = FindFirstObjectByType<InputController>();
+            _inputController = inputControllerObject.GetComponent<InputController>();
             _physicsComponent = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            if (!_inputController)
+            if (_inputController == null)
             {
-                Debug.LogError("Can't find InputController on Hierarchy.\nPlease add one.");
+                Debug.LogError("Can't find reference for InputController.\nPlease add one.");
             }
 
-            if (!playerInfo)
+            if (playerInfo == null)
             {
                 Debug.LogError("Can't find Player Info reference for setup.\nPlease add one.");
             }

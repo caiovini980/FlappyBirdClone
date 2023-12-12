@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInfo: {fileID: 11400000, guid: 02a9cd1f875e3cc42a6df561f21ea69e, type: 2}
+  inputControllerObject: {fileID: 533971682}
 --- !u!212 &422517192
 SpriteRenderer:
   m_ObjectHideFlags: 0
