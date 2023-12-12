@@ -24,11 +24,11 @@ public partial class @TouchControls: IInputActionCollection2, IDisposable
     ""name"": ""TouchControls"",
     ""maps"": [
         {
-            ""name"": ""Touch"",
+            ""name"": ""Input"",
             ""id"": ""39966d46-d5f0-4b6b-9f83-7c97138014d8"",
             ""actions"": [
                 {
-                    ""name"": ""Touch"",
+                    ""name"": ""Jump"",
                     ""type"": ""PassThrough"",
                     ""id"": ""ed08593a-a8c5-48a1-9c3b-3a84acba58aa"",
                     ""expectedControlType"": ""Button"",
@@ -45,7 +45,7 @@ public partial class @TouchControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Touch"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -54,9 +54,9 @@ public partial class @TouchControls: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Touch
-        m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
-        m_Touch_Touch = m_Touch.FindAction("Touch", throwIfNotFound: true);
+        // Input
+        m_Input = asset.FindActionMap("Input", throwIfNotFound: true);
+        m_Input_Jump = m_Input.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -115,53 +115,53 @@ public partial class @TouchControls: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Touch
-    private readonly InputActionMap m_Touch;
-    private List<ITouchActions> m_TouchActionsCallbackInterfaces = new List<ITouchActions>();
-    private readonly InputAction m_Touch_Touch;
-    public struct TouchActions
+    // Input
+    private readonly InputActionMap m_Input;
+    private List<IInputActions> m_InputActionsCallbackInterfaces = new List<IInputActions>();
+    private readonly InputAction m_Input_Jump;
+    public struct InputActions
     {
         private @TouchControls m_Wrapper;
-        public TouchActions(@TouchControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Touch => m_Wrapper.m_Touch_Touch;
-        public InputActionMap Get() { return m_Wrapper.m_Touch; }
+        public InputActions(@TouchControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Jump => m_Wrapper.m_Input_Jump;
+        public InputActionMap Get() { return m_Wrapper.m_Input; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TouchActions set) { return set.Get(); }
-        public void AddCallbacks(ITouchActions instance)
+        public static implicit operator InputActionMap(InputActions set) { return set.Get(); }
+        public void AddCallbacks(IInputActions instance)
         {
-            if (instance == null || m_Wrapper.m_TouchActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_TouchActionsCallbackInterfaces.Add(instance);
-            @Touch.started += instance.OnTouch;
-            @Touch.performed += instance.OnTouch;
-            @Touch.canceled += instance.OnTouch;
+            if (instance == null || m_Wrapper.m_InputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InputActionsCallbackInterfaces.Add(instance);
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
-        private void UnregisterCallbacks(ITouchActions instance)
+        private void UnregisterCallbacks(IInputActions instance)
         {
-            @Touch.started -= instance.OnTouch;
-            @Touch.performed -= instance.OnTouch;
-            @Touch.canceled -= instance.OnTouch;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
-        public void RemoveCallbacks(ITouchActions instance)
+        public void RemoveCallbacks(IInputActions instance)
         {
-            if (m_Wrapper.m_TouchActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_InputActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(ITouchActions instance)
+        public void SetCallbacks(IInputActions instance)
         {
-            foreach (var item in m_Wrapper.m_TouchActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_InputActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_TouchActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_InputActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public TouchActions @Touch => new TouchActions(this);
-    public interface ITouchActions
+    public InputActions @Input => new InputActions(this);
+    public interface IInputActions
     {
-        void OnTouch(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

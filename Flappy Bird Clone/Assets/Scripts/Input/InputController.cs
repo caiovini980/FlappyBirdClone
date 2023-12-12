@@ -7,10 +7,10 @@ namespace Input
     public class InputController : ControllerBase
     {
         // DELEGATES
-        public delegate void TouchHappened();
+        public delegate void InputHappened();
 
         // EVENTS
-        public event TouchHappened OnTouchHappened;
+        public event InputHappened OnInputHappened;
     
         // VARIABLES
         private TouchControls _controls;
@@ -37,13 +37,13 @@ namespace Input
         protected override void StartController()
         {
             Debug.Log("Setting events for Input controls...");
-            _controls.Touch.Touch.started += StartTouch;
+            _controls.Input.Jump.started += StartInput;
         }
 
-        private void StartTouch(InputAction.CallbackContext context)
+        private void StartInput(InputAction.CallbackContext context)
         {
             Debug.Log("Touch started!");
-            if (OnTouchHappened != null) { OnTouchHappened(); }
+            if (OnInputHappened != null) { OnInputHappened(); }
         }
     }
 }

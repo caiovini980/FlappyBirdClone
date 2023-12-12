@@ -2,11 +2,11 @@
     "name": "TouchControls",
     "maps": [
         {
-            "name": "Touch",
+            "name": "Input",
             "id": "39966d46-d5f0-4b6b-9f83-7c97138014d8",
             "actions": [
                 {
-                    "name": "Touch",
+                    "name": "Jump",
                     "type": "PassThrough",
                     "id": "ed08593a-a8c5-48a1-9c3b-3a84acba58aa",
                     "expectedControlType": "Button",
@@ -23,7 +23,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Touch",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
