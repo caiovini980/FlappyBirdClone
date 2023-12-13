@@ -1,3 +1,4 @@
+using System;
 using Player;
 using UnityEngine;
 
@@ -28,10 +29,7 @@ namespace Obstacles
                 return;
             }
 
-            if (OnPlayerTouchedObstacle != null)
-            {
-                OnPlayerTouchedObstacle();
-            }
+            OnPlayerTouchedObstacle?.Invoke();
             // Kill player
         }
     }

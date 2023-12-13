@@ -42,7 +42,7 @@ namespace Input
 
         private void StartInput(InputAction.CallbackContext context)
         {
-            if (OnInputHappened != null) { OnInputHappened(); }
+            OnInputHappened?.Invoke();
         }
     }
 }
