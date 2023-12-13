@@ -10,7 +10,7 @@ namespace Input
         public delegate void InputHappened();
 
         // EVENTS
-        public event InputHappened OnInputHappened;
+        public static event InputHappened OnInputHappened;
     
         // VARIABLES
         private TouchControls _controls;
