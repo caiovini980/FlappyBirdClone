@@ -1,3 +1,4 @@
+using System;
 using Input;
 using Obstacles;
 using ScriptableObjects;
@@ -9,9 +10,12 @@ namespace Player
     {
         [SerializeField] private PlayerInfo playerInfo;
         [SerializeField] private InputController inputController;
+        [SerializeField] private float speed;
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _physicsComponent;
+
+        private bool _canMove = false; // true when countdown ends
 
         private void Awake()
         {
@@ -29,6 +33,12 @@ namespace Player
         {
             SetupPlayer();
             SubscribeEvents();
+        }
+
+        private void Update()
+        {
+            // if (!_canMove) return;
+            transform.position += Vector3.right * (speed * Time.deltaTime);
         }
 
         private void SetupPlayer()
