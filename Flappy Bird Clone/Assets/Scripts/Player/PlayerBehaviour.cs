@@ -1,5 +1,5 @@
-using System;
 using Input;
+using Obstacles;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -8,22 +8,14 @@ namespace Player
     public class PlayerBehaviour : MonoBehaviour
     {
         [SerializeField] private PlayerInfo playerInfo;
-        [SerializeField] private GameObject inputControllerObject;
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _physicsComponent;
-        private InputController _inputController;
 
         private void Awake()
         {
-            _inputController = inputControllerObject.GetComponent<InputController>();
             _physicsComponent = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-
-            if (_inputController == null)
-            {
-                Debug.LogError("Can't find reference for InputController.\nPlease add one.");
-            }
 
             if (playerInfo == null)
             {
@@ -49,16 +41,24 @@ namespace Player
         {
             _physicsComponent.velocity = Vector2.up * playerInfo.jumpForce;
         }
+
+        private void Die()
+        {
+            Debug.Log("Player Died!");
+            UnsubscribeEvents();
+        }
         
         // SUBSCRIPTIONS
         private void SubscribeEvents()
         {
-            _inputController.OnInputHappened += Jump;
+            InputController.OnInputHappened += Jump;
+            ObstacleBehaviour.OnPlayerTouchedObstacle += Die;
         }
 
         private void UnsubscribeEvents()
         {
-            _inputController.OnInputHappened -= Jump;
+            InputController.OnInputHappened -= Jump;
+            ObstacleBehaviour.OnPlayerTouchedObstacle -= Die;
         }
     }
 }
