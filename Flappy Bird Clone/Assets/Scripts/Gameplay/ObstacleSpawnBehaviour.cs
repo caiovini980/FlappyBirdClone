@@ -1,13 +1,13 @@
-using Base.Controllers;
-using Obstacles;
 using UnityEngine;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace Gameplay
 {
     public class ObstacleSpawnController : MonoBehaviour
     {
-        [Header("References")]
+        [Header("References")] 
+        [SerializeField] private ObstacleHideController obstacleHideController;
         [SerializeField] private GameObject positionToEnableObstacle;
         [SerializeField] private GameObject obstaclePrefab;
         [SerializeField] private ObjectPool pool;   
@@ -16,7 +16,7 @@ namespace Gameplay
         [Space(5)]
         [Header("Settings")]
         [SerializeField] private int amountToSpawn = 5;
-        // [SerializeField] private float horizontalDistanceBetweenInstances = 1.25f;
+        [SerializeField] private float horizontalDistanceBetweenInstances = 1.25f;
         [SerializeField] private float minVerticalPositionToSpawnObstacles = 0.5f;
         [SerializeField] private float maxVerticalPositionToSpawnObstacles = 2.3f;
 
@@ -30,13 +30,17 @@ namespace Gameplay
         {
             for (int i = 0; i < amountToSpawn; i++)
             {
-                GameObject newObstacle = pool.GetObject(obstaclePrefab);
-                newObstacle.transform.SetParent(environmentSection);
-                newObstacle.transform.position = new Vector3(
-                    positionToEnableObstacle.transform.position.x,
-                    GetRandomYPosition(),
-                    transform.position.z);
+                float xPosition = positionToEnableObstacle.transform.position.x + 
+                                  horizontalDistanceBetweenInstances * i;
+                GenerateObstacleAtPosition(new Vector3(xPosition, GetRandomYPosition(), transform.position.z));
             }
+        }
+
+        private void GenerateObstacleAtPosition(Vector3 position)
+        {
+            GameObject newObstacle = pool.GetObject(obstaclePrefab);
+            newObstacle.transform.SetParent(environmentSection);
+            newObstacle.transform.position = position;
         }
 
         private float GetRandomYPosition()
@@ -51,7 +55,13 @@ namespace Gameplay
         // EVENTS
         private void SetupEvents()
         {
-            
+            obstacleHideController.OnReturnObstacle += () =>
+            {
+                GenerateObstacleAtPosition(
+                    new Vector3(
+                        positionToEnableObstacle.transform.position.x, GetRandomYPosition(), transform.position.z)
+                    );
+            };
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Player
     public class PlayerBehaviour : MonoBehaviour
     {
         [SerializeField] private PlayerInfo playerInfo;
+        [SerializeField] private InputController inputController;
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _physicsComponent;
@@ -51,13 +52,12 @@ namespace Player
         // SUBSCRIPTIONS
         private void SubscribeEvents()
         {
-            InputController.OnInputHappened += Jump;
-            ObstacleBehaviour.OnPlayerTouchedObstacle += Die;
+            inputController.OnInputHappened += Jump;
         }
 
         private void UnsubscribeEvents()
         {
-            InputController.OnInputHappened -= Jump;
+            inputController.OnInputHappened -= Jump;
             ObstacleBehaviour.OnPlayerTouchedObstacle -= Die;
         }
     }

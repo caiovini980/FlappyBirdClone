@@ -6,6 +6,10 @@ namespace Gameplay
 {
     public class ObstacleHideController : MonoBehaviour
     {
+        public delegate void ReturnObstacle();
+
+        public event ReturnObstacle OnReturnObstacle;
+        
         [SerializeField] private ObjectPool pool;
         
         // EVENTS
@@ -14,6 +18,7 @@ namespace Gameplay
             if (other.TryGetComponent(out ObstacleBehaviour obstacle))
             {
                 pool.ReturnObjectToThePool(other.transform.parent.gameObject);
+                OnReturnObstacle?.Invoke();
             }
         }
     }

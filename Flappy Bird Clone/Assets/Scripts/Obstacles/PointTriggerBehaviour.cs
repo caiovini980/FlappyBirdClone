@@ -31,6 +31,7 @@ namespace Obstacles
             {
                 // add points to player
                 Debug.Log("Add points to the player!");
+                _isPlayerOnTrigger = false;
             }
         }
     }
