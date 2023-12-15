@@ -10,7 +10,7 @@ namespace Gameplay
         [SerializeField] private ObstacleHideController obstacleHideController;
         [SerializeField] private GameObject positionToEnableObstacle;
         [SerializeField] private GameObject obstaclePrefab;
-        [SerializeField] private ObjectPool pool;   
+        [SerializeField] private ObjectPoolHandler pool;   
         [SerializeField] private Transform environmentSection;
         
         [Space(5)]
