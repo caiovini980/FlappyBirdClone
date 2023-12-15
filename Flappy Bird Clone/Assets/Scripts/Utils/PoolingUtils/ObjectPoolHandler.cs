@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Utils.PoolingUtils
 {
-    public class ObjectPool : MonoBehaviour
+    public class ObjectPoolHandler : MonoBehaviour
     {
         // VARIABLES
         private Dictionary<string, Queue<GameObject>> _objectPool = new Dictionary<string, Queue<GameObject>>();
