@@ -56,6 +56,9 @@ namespace Player
         private void Die()
         {
             Debug.Log("Player Died!");
+            // stop time for a brief
+            // play die sfx
+            // impulse player up a little so it dies like mario 
             UnsubscribeEvents();
         }
         
@@ -63,6 +66,7 @@ namespace Player
         private void SubscribeEvents()
         {
             inputController.OnInputHappened += Jump;
+            ObstacleBehaviour.OnPlayerTouchedObstacle += Die;
         }
 
         private void UnsubscribeEvents()

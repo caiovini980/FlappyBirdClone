@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utils
+namespace Utils.PoolingUtils
 {
-    public class ObjectPool : MonoBehaviour
+    public class ObjectPoolHandler : MonoBehaviour
     {
         // VARIABLES
         private Dictionary<string, Queue<GameObject>> _objectPool = new Dictionary<string, Queue<GameObject>>();

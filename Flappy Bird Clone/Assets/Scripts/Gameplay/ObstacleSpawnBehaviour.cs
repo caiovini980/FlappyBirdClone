@@ -1,5 +1,5 @@
 using UnityEngine;
-using Utils;
+using Utils.PoolingUtils;
 using Random = UnityEngine.Random;
 
 namespace Gameplay

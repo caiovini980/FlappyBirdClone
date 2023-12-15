@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Utils
+namespace Utils.RandomUtils
 {
     public class SeedHandler : MonoBehaviour
     {
