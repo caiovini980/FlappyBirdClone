@@ -10,7 +10,7 @@ namespace Gameplay
 
         public event ReturnObstacle OnReturnObstacle;
         
-        [SerializeField] private ObjectPool pool;
+        [SerializeField] private ObjectPoolHandler pool;
         
         // EVENTS
         private void OnTriggerEnter2D(Collider2D other)
