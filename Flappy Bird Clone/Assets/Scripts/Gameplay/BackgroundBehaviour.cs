@@ -4,9 +4,6 @@ namespace Gameplay
 {
     public class BackgroundBehaviour : MonoBehaviour
     {
-        [SerializeField] private bool isAspectRatio;
-        [SerializeField] private float multiplier;
-
         private SpriteRenderer _renderer;
 
         private void Awake()
