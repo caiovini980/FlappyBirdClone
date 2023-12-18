@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Utils.PoolingUtils
@@ -20,11 +22,11 @@ namespace Utils.PoolingUtils
                     return objectFound;
                 }
             }
-            
+
             return CreateNewObject(givenObject);
         }
 
-        public void ReturnObjectToThePool(GameObject givenObject)
+        public void AddToThePool(GameObject givenObject)
         {
             if (GetQueueOfGivenObject(givenObject, out Queue<GameObject> objectList))
             {

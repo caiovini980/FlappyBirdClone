@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Utils.PoolingUtils;
 using Random = UnityEngine.Random;
@@ -20,8 +21,29 @@ namespace Gameplay
         [SerializeField] private float minVerticalPositionToSpawnObstacles = 0.5f;
         [SerializeField] private float maxVerticalPositionToSpawnObstacles = 2.3f;
 
+        private float _initialOffset;
+        private float _respawnOffset;
+        private float _worldWidth;
+        
+        private void Awake()
+        {
+            float aspect = (float) Screen.width / Screen.height;
+            
+            if (Camera.main != null)
+            {
+                float worldHeight = Camera.main.orthographicSize * 2;
+                _worldWidth = worldHeight * aspect;
+                _initialOffset = _worldWidth * 0.3f;
+                _respawnOffset = _initialOffset * 1.4f;
+            }
+        }
+
         private void Start()
         {
+            Vector3 position = positionToEnableObstacle.transform.position;
+            Vector3 startPosition = new Vector3((_worldWidth) - _initialOffset, position.y, position.z);
+            positionToEnableObstacle.transform.position = startPosition;
+            
             SetupEvents();
             CreateInitialObstacles();
         }
@@ -57,10 +79,17 @@ namespace Gameplay
         {
             obstacleHideController.OnReturnObstacle += () =>
             {
+                float distanceForPipes = amountToSpawn * horizontalDistanceBetweenInstances;
+                float initialSpace = _worldWidth + _respawnOffset;
+                float currentPosition = positionToEnableObstacle.transform.position.x;
+                float distanceToTheFinalPipe = distanceForPipes + currentPosition;
+                
                 GenerateObstacleAtPosition(
                     new Vector3(
-                        positionToEnableObstacle.transform.position.x, GetRandomYPosition(), transform.position.z)
-                    );
+                        distanceToTheFinalPipe - initialSpace, 
+                        GetRandomYPosition(), 
+                        transform.position.z)
+                );
             };
         }
     }
