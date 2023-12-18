@@ -172,7 +172,7 @@ MonoBehaviour:
   obstaclePrefab: {fileID: 449513309874914383, guid: dea8e535256951943975febcda96f844, type: 3}
   pool: {fileID: 999767439}
   environmentSection: {fileID: 205691326}
-  amountToSpawn: 2
+  amountToSpawn: 10
   horizontalDistanceBetweenInstances: 1.5
   minVerticalPositionToSpawnObstacles: 0.5
   maxVerticalPositionToSpawnObstacles: 2.3
@@ -188,7 +188,7 @@ GameObject:
   m_Layer: 0
   m_Name: NewObstaclesSpawnPosition
   m_TagString: Untagged
-  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -462,6 +462,52 @@ Transform:
   - {fileID: 422517193}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &592228232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 592228233}
+  - component: {fileID: 592228234}
+  m_Layer: 0
+  m_Name: ScoreController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &592228233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592228232}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1659173972}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &592228234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592228232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce91600d56f52784d91fc4a0108f538a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialScore: 0
+  scorePerObstacle: 1
 --- !u!1 &698640334
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +661,7 @@ Transform:
   m_Children:
   - {fileID: 533971684}
   - {fileID: 70420676}
+  - {fileID: 592228233}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1702523644
@@ -678,7 +725,7 @@ GameObject:
   m_Layer: 0
   m_Name: ObstacleHidePosition
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -691,7 +738,7 @@ Transform:
   m_GameObject: {fileID: 2035231487}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

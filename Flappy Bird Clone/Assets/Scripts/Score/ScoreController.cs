@@ -6,6 +6,12 @@ namespace Score
 {
     public class ScoreController : ControllerBase
     {
+        // DELEGATES
+        public delegate void ScoreUpdated();
+        
+        // EVENTS
+        public event ScoreUpdated OnScoreUpdated;
+        
         // VARIABLES
         [SerializeField] private int initialScore;
         [SerializeField] private int scorePerObstacle;
@@ -39,6 +45,7 @@ namespace Score
         private void AddPointsToPlayer()
         {
             _score += scorePerObstacle;
+            OnScoreUpdated?.Invoke();
             Debug.Log($"Player score is: {_score}");
         }
 
@@ -55,14 +62,20 @@ namespace Score
         // EVENTS
         private void SubscribeEvents()
         {
-            PointTriggerBehaviour.OnScoreAdded += AddPointsToPlayer;
+            PointTriggerBehaviour.OnPointTriggerActivated += AddPointsToPlayer;
             ObstacleBehaviour.OnPlayerTouchedObstacle += SaveHighScore;
         }
         
         private void UnsubscribeEvents()
         {
-            PointTriggerBehaviour.OnScoreAdded -= AddPointsToPlayer;
+            PointTriggerBehaviour.OnPointTriggerActivated -= AddPointsToPlayer;
             ObstacleBehaviour.OnPlayerTouchedObstacle -= SaveHighScore;
+        }
+        
+        // GETTERS
+        public int GetCurrentScore()
+        {
+            return _score;
         }
     }
 }
