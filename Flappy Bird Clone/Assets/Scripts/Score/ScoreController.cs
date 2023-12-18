@@ -39,6 +39,7 @@ namespace Score
         private void AddPointsToPlayer()
         {
             _score += scorePerObstacle;
+            Debug.Log($"Player score is: {_score}");
         }
 
         private void SaveHighScore()
@@ -47,6 +48,8 @@ namespace Score
             {
                 _highScore = _score;
             }
+
+            // SAVE SCORE AND HIGHSCORE
         }
         
         // EVENTS
