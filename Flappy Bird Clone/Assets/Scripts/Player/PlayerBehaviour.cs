@@ -73,7 +73,6 @@ namespace Player
             Jump();
             // stop time for a brief
             // play die sfx
-            // impulse player up a little so it dies like mario 
             _canMove = false;
             _collider.enabled = false;
             UnsubscribeEvents();

@@ -1,5 +1,6 @@
 using Base.Controllers;
 using Input;
+using Obstacles;
 using UnityEngine;
 using Utils.TimeUtils;
 
@@ -35,6 +36,13 @@ namespace Gameplay
         {
         }
 
+        public void RestartGame()
+        {
+            // play transition
+            // replace player and camera
+            // replace pipes
+        }
+
         private void StartGame()
         {
             if (!_hasGameStarted)
@@ -45,14 +53,21 @@ namespace Gameplay
             }
         }
 
+        private void EndGame()
+        {
+            _hasGameStarted = false;
+        }
+
         private void SetupEvents()
         {
             inputController.OnInputHappened += StartGame;
+            ObstacleBehaviour.OnPlayerTouchedObstacle += EndGame;
         }
 
         private void DisableEvents()
         {
             inputController.OnInputHappened -= StartGame;
+            ObstacleBehaviour.OnPlayerTouchedObstacle -= EndGame;
         }
     }
 }
