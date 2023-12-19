@@ -28,7 +28,7 @@ namespace Gameplay
             {
                 float worldHeight = Camera.main.orthographicSize * 2;
                 _worldWidth = worldHeight * aspect;
-                _offset = _worldWidth * 0.2f;
+                _offset = _worldWidth * 0.18f;
             }
         }
 

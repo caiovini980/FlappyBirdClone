@@ -6,9 +6,9 @@ namespace Obstacles
 {
     public class PointTriggerBehaviour : MonoBehaviour
     {
-        public delegate void AddScore();
+        public delegate void PointTriggerActivated();
 
-        public static event AddScore OnScoreAdded;
+        public static event PointTriggerActivated OnPointTriggerActivated;
         
         private BoxCollider2D _collider;
         private bool _isPlayerOnTrigger;
@@ -35,7 +35,7 @@ namespace Obstacles
             {
                 // add points to player
                 Debug.Log("Add points to the player!");
-                OnScoreAdded?.Invoke();
+                OnPointTriggerActivated?.Invoke();
                 _isPlayerOnTrigger = false;
             }
         }
