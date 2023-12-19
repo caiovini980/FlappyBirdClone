@@ -25,7 +25,7 @@ namespace Utils.TimeUtils
         // TODO Change coroutine to async
         private IEnumerator Countdown(float duration)
         {
-            for (int i = 0; i < duration; i++)
+            for (float i = duration; i > 0; i--)
             {
                 yield return new WaitForSecondsRealtime(1);
                 OnTimerUpdated?.Invoke(i);

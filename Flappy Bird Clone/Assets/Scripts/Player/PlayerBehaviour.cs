@@ -1,4 +1,5 @@
 using System;
+using Gameplay;
 using Input;
 using Obstacles;
 using ScriptableObjects;
@@ -12,17 +13,20 @@ namespace Player
         [SerializeField] private PlayerInfo playerInfo;
         [SerializeField] private InputController inputController;
         [SerializeField] private CountdownHandler countdownHandler;
+        [SerializeField] private GameController gameController;
         [SerializeField] private float speed;
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _physicsComponent;
+        private CircleCollider2D _collider;
 
-        private bool _canMove; // true when countdown ends
+        private bool _canMove; 
 
         private void Awake()
         {
             _physicsComponent = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<CircleCollider2D>();
 
             if (playerInfo == null)
             {
@@ -36,8 +40,7 @@ namespace Player
         private void Start()
         {
             SetupPlayer();
-            SubscribeEvents();
-            countdownHandler.StartCountdown(3);
+            gameController.OnGameStarted += StartGame;
         }
 
         private void Update()
@@ -46,11 +49,17 @@ namespace Player
             transform.position += Vector3.right * (speed * Time.deltaTime);
         }
 
+        private void StartGame()
+        {
+            _collider.enabled = true;
+            SubscribeEvents();
+        }
+
         private void SetupPlayer()
         {
             _spriteRenderer.sprite = playerInfo.playerSprite;
             gameObject.transform.position = Vector3.zero;
-            _physicsComponent.simulated = false; // enable when countdown ends
+            _physicsComponent.simulated = false; 
         }
         
         private void Jump()
@@ -66,6 +75,7 @@ namespace Player
             // play die sfx
             // impulse player up a little so it dies like mario 
             _canMove = false;
+            _collider.enabled = false;
             UnsubscribeEvents();
         }
         
@@ -79,6 +89,8 @@ namespace Player
         // SUBSCRIPTIONS
         private void SubscribeEvents()
         {
+            gameController.OnGameStarted -= StartGame;
+            
             inputController.OnInputHappened += Jump;
             countdownHandler.OnTimerFinished += EnableMovement;
             ObstacleBehaviour.OnPlayerTouchedObstacle += Die;
