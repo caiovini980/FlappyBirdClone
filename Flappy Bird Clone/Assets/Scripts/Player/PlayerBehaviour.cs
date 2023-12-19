@@ -1,4 +1,3 @@
-using System;
 using Gameplay;
 using Input;
 using Obstacles;
@@ -71,6 +70,7 @@ namespace Player
         private void Die()
         {
             Debug.Log("Player Died!");
+            Jump();
             // stop time for a brief
             // play die sfx
             // impulse player up a little so it dies like mario 

@@ -23,11 +23,12 @@ namespace UI
         [SerializeField] private CountdownHandler countdownHandler;
 
         private RectTransform _menuRectTransform;
+        private RectTransform _endGameRectTransform;
         
         private readonly float _menuFadeInTime = 1f;
         private readonly float _menuFadeOutTime = .5f;
-        private float _endGameFadeInTime = 1f;
-        private float _endGameFadeOutTime = 1f;
+        private readonly float _endGameFadeInTime = .5f;
+        private readonly float _endGameFadeOutTime = 1f;
 
         private readonly float _minYPosition = -2000f;
         private readonly float _timeToEnableScore = 1f;
@@ -40,6 +41,7 @@ namespace UI
         protected override void AwakeController()
         {
             _menuRectTransform = mainMenuUI.GetComponent<RectTransform>();
+            _endGameRectTransform = endGameUI.GetComponent<RectTransform>();
         }
 
         protected override void EnableController()
@@ -103,20 +105,19 @@ namespace UI
         private void EnterGameOverAnimation()
         {
             EnableEndGameUI();
-            RectTransform rectTransform = mainMenuUI.GetComponent<RectTransform>();
             
-            rectTransform.transform.localPosition = new Vector3(0f, _minYPosition, 0f);
-            rectTransform.DOAnchorPos(
+            _endGameRectTransform.transform.localPosition = new Vector3(0f, _minYPosition, 0f);
+            _endGameRectTransform.DOAnchorPos(
                 new Vector2(0, 0), 
-                _menuFadeInTime, false).SetEase(Ease.InQuint);
+                _endGameFadeInTime, false).SetEase(Ease.InQuint);
         }
 
         private void ExitGameOverAnimation()
         {
-            _menuRectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
-            _menuRectTransform.DOAnchorPos(
+            _endGameRectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
+            _endGameRectTransform.DOAnchorPos(
                 new Vector2(0, _minYPosition), 
-                _menuFadeOutTime, false).SetEase(Ease.InQuint);
+                _endGameFadeOutTime, false).SetEase(Ease.InQuint);
         }
 
         private void StartGame()
