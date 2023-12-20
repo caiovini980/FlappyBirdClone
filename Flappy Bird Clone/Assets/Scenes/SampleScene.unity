@@ -725,6 +725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce91600d56f52784d91fc4a0108f538a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 1044467172}
   initialScore: 0
   scorePerObstacle: 1
 --- !u!1 &609517027
