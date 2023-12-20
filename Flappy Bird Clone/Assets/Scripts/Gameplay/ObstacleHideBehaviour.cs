@@ -34,7 +34,6 @@ namespace Gameplay
 
         private void Start()
         {
-            Debug.Log($"width {_worldWidth}, offset {_offset}");
             SetupHidePosition();
         }
 

@@ -46,7 +46,6 @@ namespace Score
         {
             _score += scorePerObstacle;
             OnScoreUpdated?.Invoke();
-            Debug.Log($"Player score is: {_score}");
         }
 
         private void SaveHighScore()

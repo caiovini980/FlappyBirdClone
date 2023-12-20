@@ -1,4 +1,4 @@
-using System;
+using Gameplay;
 using Input;
 using Obstacles;
 using ScriptableObjects;
@@ -12,17 +12,20 @@ namespace Player
         [SerializeField] private PlayerInfo playerInfo;
         [SerializeField] private InputController inputController;
         [SerializeField] private CountdownHandler countdownHandler;
+        [SerializeField] private GameController gameController;
         [SerializeField] private float speed;
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _physicsComponent;
+        private CircleCollider2D _collider;
 
-        private bool _canMove; // true when countdown ends
+        private bool _canMove; 
 
         private void Awake()
         {
             _physicsComponent = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<CircleCollider2D>();
 
             if (playerInfo == null)
             {
@@ -35,9 +38,13 @@ namespace Player
         // METHODS
         private void Start()
         {
-            SetupPlayer();
+            gameController.OnGameStarted += StartGame;
             SubscribeEvents();
-            countdownHandler.StartCountdown(3);
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
         }
 
         private void Update()
@@ -46,11 +53,20 @@ namespace Player
             transform.position += Vector3.right * (speed * Time.deltaTime);
         }
 
+        private void StartGame()
+        {
+            SetupPlayer();
+            _collider.enabled = true;
+        }
+
         private void SetupPlayer()
         {
-            _spriteRenderer.sprite = playerInfo.playerSprite;
+            Debug.Log("SETTING UP PLAYER");
+            
             gameObject.transform.position = Vector3.zero;
-            _physicsComponent.simulated = false; // enable when countdown ends
+            _physicsComponent.velocity = Vector2.zero;
+            _spriteRenderer.sprite = playerInfo.playerSprite;
+            _physicsComponent.simulated = false; 
         }
         
         private void Jump()
@@ -62,11 +78,12 @@ namespace Player
         private void Die()
         {
             Debug.Log("Player Died!");
+            Jump();
             // stop time for a brief
             // play die sfx
-            // impulse player up a little so it dies like mario 
             _canMove = false;
-            UnsubscribeEvents();
+            _collider.enabled = false;
+            gameController.OnGameStarted += StartGame;
         }
         
         private void EnableMovement()
@@ -79,6 +96,8 @@ namespace Player
         // SUBSCRIPTIONS
         private void SubscribeEvents()
         {
+            gameController.OnGameStarted -= StartGame;
+            
             inputController.OnInputHappened += Jump;
             countdownHandler.OnTimerFinished += EnableMovement;
             ObstacleBehaviour.OnPlayerTouchedObstacle += Die;
