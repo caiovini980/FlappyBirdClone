@@ -112,7 +112,7 @@ namespace UI
                 _endGameFadeInTime, false).SetEase(Ease.InQuint);
         }
 
-        private void ExitGameOverAnimation()
+        public void ExitGameOverAnimation()
         {
             _endGameRectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
             _endGameRectTransform.DOAnchorPos(

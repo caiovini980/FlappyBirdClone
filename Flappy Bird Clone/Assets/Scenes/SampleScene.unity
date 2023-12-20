@@ -172,6 +172,7 @@ MonoBehaviour:
   obstaclePrefab: {fileID: 449513309874914383, guid: dea8e535256951943975febcda96f844, type: 3}
   pool: {fileID: 999767439}
   environmentSection: {fileID: 205691326}
+  gameController: {fileID: 1044467172}
   amountToSpawn: 10
   horizontalDistanceBetweenInstances: 1.5
   minVerticalPositionToSpawnObstacles: 0.5
@@ -285,7 +286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &233482893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -527,7 +528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 422517193}
-  rate: 5
+  rate: 10
   xOffset: 0.1
 --- !u!1 &527779502
 GameObject:
@@ -753,7 +754,7 @@ RectTransform:
   m_GameObject: {fileID: 609517027}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 2, z: 1}
+  m_LocalScale: {x: 6.3763, y: 1.27526, z: 0.63763}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1424368781}
@@ -1423,7 +1424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -1500}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1630033480
@@ -1605,14 +1606,14 @@ RectTransform:
   m_GameObject: {fileID: 1802157883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75249, y: 0.75249, z: 0.75249}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1424368781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 427}
+  m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1802157885
@@ -1658,7 +1659,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1802157886}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1044467172}
+        m_TargetAssemblyTypeName: Gameplay.GameController, Assembly-CSharp
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 840081895}
+        m_TargetAssemblyTypeName: UI.UIController, Assembly-CSharp
+        m_MethodName: ExitGameOverAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1802157886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,7 +1831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 127}
   m_SizeDelta: {x: 800, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2033529026
@@ -2152,6 +2177,10 @@ PrefabInstance:
       propertyPath: countdownHandler
       value: 
       objectReference: {fileID: 698640336}
+    - target: {fileID: 7084653138888656016, guid: 15dd498b3418d3148a8de7a518b8a854, type: 3}
+      propertyPath: m_Simulated
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9105569529380904109, guid: 15dd498b3418d3148a8de7a518b8a854, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

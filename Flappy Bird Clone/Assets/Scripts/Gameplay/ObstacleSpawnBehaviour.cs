@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils.PoolingUtils;
@@ -25,9 +25,12 @@ namespace Gameplay
 
         private List<GameObject> _obstaclesSpawned = new List<GameObject>();
         
+        private readonly float _timeToSpawnFirstObstacles = 2.0f;
+        
         private float _initialOffset;
         private float _respawnOffset;
         private float _worldWidth;
+        
         
         private void Awake()
         {
@@ -49,11 +52,12 @@ namespace Gameplay
             positionToEnableObstacle.transform.position = startPosition;
             
             SetupEvents();
-            // CreateInitialObstacles();
         }
 
         private void CreateInitialObstacles()
         {
+            ClearObstacles();
+            
             for (int i = 0; i < amountToSpawn; i++)
             {
                 float xPosition = positionToEnableObstacle.transform.position.x + 
@@ -90,6 +94,8 @@ namespace Gameplay
             {
                 pool.AddToThePool(obstacle);
             }
+            
+            _obstaclesSpawned.Clear();
         }
 
         private void SetNewPositionToObstacle()
@@ -110,8 +116,20 @@ namespace Gameplay
         // EVENTS
         private void SetupEvents()
         {
-            gameController.OnGameStarted += CreateInitialObstacles;
+            gameController.OnGameStarted += (() =>
+            {
+                Debug.Log("Game starting... Spawning obstacles");
+                StartCoroutine(WaitToSpawnInitialObstacles());
+            });
+            
             obstacleHideController.OnReturnObstacle += SetNewPositionToObstacle;
+        }
+        
+        // COROUTINES
+        IEnumerator WaitToSpawnInitialObstacles()
+        {
+            yield return new WaitForSeconds(_timeToSpawnFirstObstacles);
+            CreateInitialObstacles();
         }
     }
 }

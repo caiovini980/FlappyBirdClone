@@ -34,7 +34,6 @@ namespace Obstacles
             if (_isPlayerOnTrigger)
             {
                 // add points to player
-                Debug.Log("Add points to the player!");
                 OnPointTriggerActivated?.Invoke();
                 _isPlayerOnTrigger = false;
             }

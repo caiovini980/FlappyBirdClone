@@ -38,8 +38,13 @@ namespace Player
         // METHODS
         private void Start()
         {
-            SetupPlayer();
             gameController.OnGameStarted += StartGame;
+            SubscribeEvents();
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
         }
 
         private void Update()
@@ -50,14 +55,17 @@ namespace Player
 
         private void StartGame()
         {
+            SetupPlayer();
             _collider.enabled = true;
-            SubscribeEvents();
         }
 
         private void SetupPlayer()
         {
-            _spriteRenderer.sprite = playerInfo.playerSprite;
+            Debug.Log("SETTING UP PLAYER");
+            
             gameObject.transform.position = Vector3.zero;
+            _physicsComponent.velocity = Vector2.zero;
+            _spriteRenderer.sprite = playerInfo.playerSprite;
             _physicsComponent.simulated = false; 
         }
         
@@ -75,7 +83,7 @@ namespace Player
             // play die sfx
             _canMove = false;
             _collider.enabled = false;
-            UnsubscribeEvents();
+            gameController.OnGameStarted += StartGame;
         }
         
         private void EnableMovement()

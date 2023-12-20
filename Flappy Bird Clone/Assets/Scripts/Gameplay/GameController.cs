@@ -41,15 +41,20 @@ namespace Gameplay
             // play transition
             // replace player and camera
             // replace pipes
+            Debug.Log("RESTARTING GAME...");
+            StartGame();
         }
 
         private void StartGame()
         {
             if (!_hasGameStarted)
             {
+                Debug.Log("STARTING NEW GAME...");
                 _hasGameStarted = true;
                 OnGameStarted?.Invoke();
                 countdownHandler.StartCountdown(4);
+                
+                inputController.OnInputHappened -= StartGame;
             }
         }
 
