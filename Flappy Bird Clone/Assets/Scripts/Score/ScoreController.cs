@@ -1,4 +1,5 @@
 using Base.Controllers;
+using Gameplay;
 using Obstacles;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace Score
         public event ScoreUpdated OnScoreUpdated;
         
         // VARIABLES
+        [SerializeField] private GameController gameController;
+        [Space(5)]
         [SerializeField] private int initialScore;
         [SerializeField] private int scorePerObstacle;
         
@@ -39,7 +42,7 @@ namespace Score
 
         protected override void StartController()
         {
-            _score = initialScore;
+            ResetScore();
         }
 
         private void AddPointsToPlayer()
@@ -56,17 +59,25 @@ namespace Score
             }
 
             // SAVE SCORE AND HIGHSCORE
+            ResetScore();
+        }
+
+        private void ResetScore()
+        {
+            _score = initialScore;
         }
         
         // EVENTS
         private void SubscribeEvents()
         {
+            gameController.OnGameStarted += ResetScore;
             PointTriggerBehaviour.OnPointTriggerActivated += AddPointsToPlayer;
             ObstacleBehaviour.OnPlayerTouchedObstacle += SaveHighScore;
         }
-        
+
         private void UnsubscribeEvents()
         {
+            gameController.OnGameStarted -= ResetScore;
             PointTriggerBehaviour.OnPointTriggerActivated -= AddPointsToPlayer;
             ObstacleBehaviour.OnPlayerTouchedObstacle -= SaveHighScore;
         }

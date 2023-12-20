@@ -122,6 +122,7 @@ namespace UI
 
         private void StartGame()
         {
+            UpdateScoreUI();
             _enableInGameUICoroutine = StartCoroutine(WaitToEnableInGameUI());
         }
         
