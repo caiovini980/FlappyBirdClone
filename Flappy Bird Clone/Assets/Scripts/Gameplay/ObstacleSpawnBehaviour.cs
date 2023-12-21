@@ -48,8 +48,8 @@ namespace Gameplay
         private void Start()
         {
             Vector3 position = positionToEnableObstacle.transform.position;
-            Vector3 startPosition = new Vector3((_worldWidth) - _initialOffset, position.y, position.z);
-            positionToEnableObstacle.transform.position = startPosition;
+            position.x = (_worldWidth) - _initialOffset;
+            positionToEnableObstacle.transform.position = position;
             
             SetupEvents();
         }
