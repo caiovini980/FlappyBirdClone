@@ -19,6 +19,7 @@ namespace UI
         [SerializeField] private SfxController sfxController;
         [SerializeField] private TextMeshProUGUI timerText;
         [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI highScoreText;
         [SerializeField] private ScoreController scoreController;
         [SerializeField] private GameController gameController;
         [SerializeField] private CountdownHandler countdownHandler;
@@ -69,6 +70,11 @@ namespace UI
         {
             scoreText.text = "" + scoreController.GetCurrentScore();
         }
+        
+        private void UpdateHighScoreUI()
+        {
+            highScoreText.text = "" + scoreController.GetHighScore();
+        }
 
         private void UpdateTimerUI(float seconds)
         {
@@ -107,6 +113,7 @@ namespace UI
 
         private void EnterGameOverAnimation()
         {
+            UpdateHighScoreUI();
             EnableEndGameUI();
             
             _endGameRectTransform.transform.localPosition = new Vector3(0f, _minYPosition, 0f);

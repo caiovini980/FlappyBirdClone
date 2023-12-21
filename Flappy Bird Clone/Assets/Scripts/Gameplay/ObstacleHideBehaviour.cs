@@ -1,4 +1,3 @@
-using System;
 using Obstacles;
 using UnityEngine;
 using Utils.PoolingUtils;
@@ -20,7 +19,7 @@ namespace Gameplay
         private float _worldWidth;
         
         // METHODS
-        private void Awake()
+        private void Start()
         {
             float aspect = (float) Screen.width / Screen.height;
             
@@ -30,18 +29,16 @@ namespace Gameplay
                 _worldWidth = worldHeight * aspect;
                 _offset = _worldWidth * 0.18f;
             }
-        }
-
-        private void Start()
-        {
+            
             SetupHidePosition();
         }
 
         private void SetupHidePosition()
         {
             Vector3 position = transform.position;
-            Vector3 startPosition = new Vector3(-(_worldWidth) + _offset, position.y, position.z);
-            transform.position = startPosition;
+            position.x = -(_worldWidth) + _offset;
+            
+            transform.position = position;
         }
 
         // EVENTS

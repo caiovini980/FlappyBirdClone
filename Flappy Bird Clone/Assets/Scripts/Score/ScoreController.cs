@@ -24,7 +24,7 @@ namespace Score
         
         private int _score;
         private int _highScore;
-        
+
         // METHODS
         protected override void AwakeController()
         {
@@ -90,6 +90,11 @@ namespace Score
         public int GetCurrentScore()
         {
             return _score;
+        }
+
+        public int GetHighScore()
+        {
+            return _highScore;
         }
     }
 }
