@@ -6,6 +6,7 @@ using TMPro;
 using DG.Tweening;
 using Gameplay;
 using Obstacles;
+using SFX;
 using Utils.TimeUtils;
 
 namespace UI
@@ -15,13 +16,15 @@ namespace UI
         [SerializeField] private GameObject inGameUI;
         [SerializeField] private GameObject mainMenuUI;
         [SerializeField] private GameObject endGameUI;
-        [SerializeField] private GameObject transitionUI;
+        [SerializeField] private SfxController sfxController;
         [SerializeField] private TextMeshProUGUI timerText;
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private ScoreController scoreController;
         [SerializeField] private GameController gameController;
         [SerializeField] private CountdownHandler countdownHandler;
-
+        [Space(10)] 
+        [SerializeField] private AudioClip selectSound;
+        
         private RectTransform _menuRectTransform;
         private RectTransform _endGameRectTransform;
         
@@ -87,19 +90,19 @@ namespace UI
         private void EnterMainMenuAnimation()
         {
             EnableMainMenuUI();
-            
             _menuRectTransform.transform.localPosition = new Vector3(0f, _minYPosition, 0f);
             _menuRectTransform.DOAnchorPos(
                 new Vector2(0, 0), 
-                _menuFadeInTime, false).SetEase(Ease.InQuint);
+                _menuFadeInTime).SetEase(Ease.InQuint);
         }
         
         private void ExitMainMenuAnimation()
         {
+            sfxController.PlayAudio(selectSound);
             _menuRectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
             _menuRectTransform.DOAnchorPos(
                 new Vector2(0, _minYPosition), 
-                _menuFadeOutTime, false).SetEase(Ease.InQuint);
+                _menuFadeOutTime).SetEase(Ease.InQuint);
         }
 
         private void EnterGameOverAnimation()
@@ -109,15 +112,17 @@ namespace UI
             _endGameRectTransform.transform.localPosition = new Vector3(0f, _minYPosition, 0f);
             _endGameRectTransform.DOAnchorPos(
                 new Vector2(0, 0), 
-                _endGameFadeInTime, false).SetEase(Ease.InQuint);
+                _endGameFadeInTime).SetEase(Ease.InQuint);
         }
 
         public void ExitGameOverAnimation()
         {
+            scoreText.gameObject.SetActive(false);
+            
             _endGameRectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
             _endGameRectTransform.DOAnchorPos(
                 new Vector2(0, _minYPosition), 
-                _endGameFadeOutTime, false).SetEase(Ease.InQuint);
+                _endGameFadeOutTime).SetEase(Ease.InQuint);
         }
 
         private void StartGame()

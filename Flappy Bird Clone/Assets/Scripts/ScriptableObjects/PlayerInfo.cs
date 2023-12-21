@@ -11,6 +11,5 @@ namespace ScriptableObjects
         public AudioClip hitSound;
         public AudioClip jumpSound;
         public AudioClip deathSound;
-        public AudioClip scoreSound;
     }
 }

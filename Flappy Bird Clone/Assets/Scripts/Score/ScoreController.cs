@@ -1,6 +1,7 @@
 using Base.Controllers;
 using Gameplay;
 using Obstacles;
+using SFX;
 using UnityEngine;
 
 namespace Score
@@ -15,7 +16,9 @@ namespace Score
         
         // VARIABLES
         [SerializeField] private GameController gameController;
-        [Space(5)]
+        [SerializeField] private SfxController sfxController;
+        [SerializeField] private AudioClip scoreAudioClip;
+        [Space(10)]
         [SerializeField] private int initialScore;
         [SerializeField] private int scorePerObstacle;
         
@@ -48,6 +51,7 @@ namespace Score
         private void AddPointsToPlayer()
         {
             _score += scorePerObstacle;
+            sfxController.PlayAudio(scoreAudioClip);
             OnScoreUpdated?.Invoke();
         }
 
