@@ -1,6 +1,7 @@
 using Base.Controllers;
 using Input;
 using Obstacles;
+using SFX;
 using UnityEngine;
 using Utils.TimeUtils;
 
@@ -13,11 +14,13 @@ namespace Gameplay
         public event GameStarted OnGameStarted;
         
         [SerializeField] private InputController inputController;
+        [SerializeField] private SfxController sfxController;
         [SerializeField] private CountdownHandler countdownHandler;
+        [Space(10)] 
+        [SerializeField] private AudioClip restartAudio;
 
         private bool _hasGameStarted = false;
         
-        // Start is called before the first frame update
         protected override void AwakeController()
         {
         }
@@ -38,10 +41,7 @@ namespace Gameplay
 
         public void RestartGame()
         {
-            // play transition
-            // replace player and camera
-            // replace pipes
-            Debug.Log("RESTARTING GAME...");
+            sfxController.PlayAudio(restartAudio);
             StartGame();
         }
 
@@ -49,7 +49,6 @@ namespace Gameplay
         {
             if (!_hasGameStarted)
             {
-                Debug.Log("STARTING NEW GAME...");
                 _hasGameStarted = true;
                 OnGameStarted?.Invoke();
                 countdownHandler.StartCountdown(4);

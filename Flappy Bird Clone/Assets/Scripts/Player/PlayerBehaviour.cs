@@ -1,7 +1,9 @@
+using System.Collections;
 using Gameplay;
 using Input;
 using Obstacles;
 using ScriptableObjects;
+using SFX;
 using UnityEngine;
 using Utils.TimeUtils;
 
@@ -13,11 +15,14 @@ namespace Player
         [SerializeField] private InputController inputController;
         [SerializeField] private CountdownHandler countdownHandler;
         [SerializeField] private GameController gameController;
+        [SerializeField] private SfxController sfxController;
         [SerializeField] private float speed;
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _physicsComponent;
         private CircleCollider2D _collider;
+
+        private Coroutine _deathSoundCoroutine;
 
         private bool _canMove; 
 
@@ -73,14 +78,14 @@ namespace Player
         {
             if (!_canMove) return;
             _physicsComponent.velocity = Vector2.up * playerInfo.jumpForce;
+            sfxController.PlayAudio(playerInfo.jumpSound);
         }
 
         private void Die()
         {
-            Debug.Log("Player Died!");
+            sfxController.PlayAudio(playerInfo.hitSound);
             Jump();
-            // stop time for a brief
-            // play die sfx
+            _deathSoundCoroutine = StartCoroutine(WaitToPlayDeathSound());
             _canMove = false;
             _collider.enabled = false;
             gameController.OnGameStarted += StartGame;
@@ -88,7 +93,6 @@ namespace Player
         
         private void EnableMovement()
         {
-            Debug.Log("ENABLING MOVEMENT!");
             _physicsComponent.simulated = true;
             _canMove = true;
         }
@@ -108,6 +112,13 @@ namespace Player
             inputController.OnInputHappened -= Jump;
             countdownHandler.OnTimerFinished -= EnableMovement;
             ObstacleBehaviour.OnPlayerTouchedObstacle -= Die;
+        }
+        
+        // COROUTINES
+        private IEnumerator WaitToPlayDeathSound()
+        {
+            yield return new WaitForSeconds(.5f);
+            sfxController.PlayAudio(playerInfo.deathSound);
         }
     }
 }
