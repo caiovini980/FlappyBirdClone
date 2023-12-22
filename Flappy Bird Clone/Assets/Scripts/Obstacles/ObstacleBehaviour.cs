@@ -20,7 +20,14 @@ namespace Obstacles
             }
             
             OnPlayerTouchedObstacle?.Invoke();
-            // Kill player
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.TryGetComponent(out PlayerBehaviour player))
+            {
+                OnPlayerTouchedObstacle?.Invoke();
+            }
         }
     }
 }

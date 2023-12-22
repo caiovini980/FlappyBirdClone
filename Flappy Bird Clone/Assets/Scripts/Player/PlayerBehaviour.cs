@@ -1,8 +1,11 @@
-using System;
+using System.Collections;
+using Gameplay;
 using Input;
 using Obstacles;
 using ScriptableObjects;
+using SFX;
 using UnityEngine;
+using Utils.TimeUtils;
 
 namespace Player
 {
@@ -10,69 +13,112 @@ namespace Player
     {
         [SerializeField] private PlayerInfo playerInfo;
         [SerializeField] private InputController inputController;
+        [SerializeField] private CountdownHandler countdownHandler;
+        [SerializeField] private GameController gameController;
+        [SerializeField] private SfxController sfxController;
         [SerializeField] private float speed;
 
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _physicsComponent;
+        private CircleCollider2D _collider;
 
-        private bool _canMove = false; // true when countdown ends
+        private Coroutine _deathSoundCoroutine;
+
+        private bool _canMove; 
 
         private void Awake()
         {
             _physicsComponent = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<CircleCollider2D>();
 
             if (playerInfo == null)
             {
                 Debug.LogError("Can't find Player Info reference for setup.\nPlease add one.");
             }
+
+            _canMove = false;
         }
 
         // METHODS
         private void Start()
         {
-            SetupPlayer();
+            gameController.OnGameStarted += StartGame;
             SubscribeEvents();
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
         }
 
         private void Update()
         {
-            // if (!_canMove) return;
+            if (!_canMove) return;
             transform.position += Vector3.right * (speed * Time.deltaTime);
+        }
+
+        private void StartGame()
+        {
+            SetupPlayer();
+            _collider.enabled = true;
         }
 
         private void SetupPlayer()
         {
-            _spriteRenderer.sprite = playerInfo.playerSprite;
+            Debug.Log("SETTING UP PLAYER");
+            
             gameObject.transform.position = Vector3.zero;
-            // _physicsComponent.simulated = false; // enable when countdown ends
+            _physicsComponent.velocity = Vector2.zero;
+            _spriteRenderer.sprite = playerInfo.playerSprite;
+            _physicsComponent.simulated = false; 
         }
         
         private void Jump()
         {
+            if (!_canMove) return;
             _physicsComponent.velocity = Vector2.up * playerInfo.jumpForce;
+            sfxController.PlayAudio(playerInfo.jumpSound);
         }
 
         private void Die()
         {
-            Debug.Log("Player Died!");
-            // stop time for a brief
-            // play die sfx
-            // impulse player up a little so it dies like mario 
-            UnsubscribeEvents();
+            sfxController.PlayAudio(playerInfo.hitSound);
+            Jump();
+            _deathSoundCoroutine = StartCoroutine(WaitToPlayDeathSound());
+            _canMove = false;
+            _collider.enabled = false;
+            gameController.OnGameStarted += StartGame;
+        }
+        
+        private void EnableMovement()
+        {
+            _physicsComponent.simulated = true;
+            _canMove = true;
         }
         
         // SUBSCRIPTIONS
         private void SubscribeEvents()
         {
+            gameController.OnGameStarted -= StartGame;
+            
             inputController.OnInputHappened += Jump;
+            countdownHandler.OnTimerFinished += EnableMovement;
             ObstacleBehaviour.OnPlayerTouchedObstacle += Die;
         }
 
         private void UnsubscribeEvents()
         {
             inputController.OnInputHappened -= Jump;
+            countdownHandler.OnTimerFinished -= EnableMovement;
             ObstacleBehaviour.OnPlayerTouchedObstacle -= Die;
+        }
+        
+        // COROUTINES
+        private IEnumerator WaitToPlayDeathSound()
+        {
+            yield return new WaitForSeconds(.5f);
+            sfxController.PlayAudio(playerInfo.deathSound);
         }
     }
 }
