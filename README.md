@@ -2,7 +2,7 @@
 The repository holds a Flappy Bird clone made with Unity.
 
 ## How the folders are structured?
-Lookinf forward to improve the quality of imports on each dependecy, was considered to divide the folder structure accordingly to features (player, obstacle, timer, etc.) instead of class relevance (controller, entity, etc.)
+Looking forward to improve the quality of imports on each dependecy, was considered to divide the folder structure accordingly to features (player, obstacle, timer, etc.) instead of class relevance (controller, entity, etc.)
 
 ##  How is the archtecture?
 For the archtecture, was used multiple controllers to handle with specific parts of the solution. For example: gameplay, Inputs, Score and UI<br><br>
@@ -10,7 +10,7 @@ Muliple Behaviours were implemented to deal with certain object on scene, like: 
 For the communication between classes, events were majorly used for it, just like Roblox Studio. But this type of approach needs to be used carefully because it could create a lot of "Spagetti Code" pretty easly<br>
 
 ##  Where the assets could be found?
-All of them were free assets from websites like [Kenney](https://kenney.nl/assets), [Google Fonts](https://fonts.google.com/)and GitHub.
+All of them were free assets from websites like [Kenney](https://kenney.nl/assets), [Google Fonts](https://fonts.google.com/) and GitHub.
 
 ##  Next steps
 For the future:
