@@ -2,18 +2,18 @@
 The repository holds a Flappy Bird clone made with Unity.
 
 ## How the folders are structured?
-Visando melhorar a qualidade dos imports em cada dependencia, foi pensado em dividir as pastas de acordo com a feature que estava sendo implementada (player, obstacle, timer, etc.), e não com a importância daquela classe (controller, entity, etc.)
+Lookinf forward to improve the quality of imports on each dependecy, was considered to divide the folder structure accordingly to features (player, obstacle, timer, etc.) instead of class relevance (controller, entity, etc.)
 
 ##  How is the archtecture?
-Para a arquitetura, foram utilizados multiplos controllers para lidar com partes especificas da solucao, sendo elas: gameplay, SFX, Inputs, Score and UI.<br><br>
-Alem disso, diversos Behaviours foram implementados para lidar com certos objetos da cena, como: Obstacle spawn and hide, Background, Player, give points to player and the obstacle itself.<br><br>
-Ja para a comunicacao entre as classes, foi pensado em usar majoritariamente eventos para a comunicação entre as classes, assim como é feito no Roblox. Entretanto esse approach precisa ser utilizado com cautela, visto que pode gerar "spagetti code" com facilidade.<br>
+For the archtecture, was used multiple controllers to handle with specific parts of the solution. For example: gameplay, Inputs, Score and UI<br><br>
+Muliple Behaviours were implemented to deal with certain object on scene, like: Obstacle spawn and hide, background, player and the obstacle itself<br><br>
+For the communication between classes, events were majorly used for it, just like Roblox Studio. But this type of approach needs to be used carefully because it could create a lot of "Spagetti Code" pretty easly<br>
 
 ##  Where the assets could be found?
-Os assets foram todos gratuitos, e foram retirados de sites como [Kenney](https://kenney.nl/assets), [Google Fonts](https://fonts.google.com/) e o próprio GitHub.
+All of them were free assets from websites like [Kenney](https://kenney.nl/assets), [Google Fonts](https://fonts.google.com/)and GitHub.
 
 ##  Next steps
-Para os próximos passos:
+For the future:
 - Apply order to the execution (the game manager will notify all the controllers to load up when the game started)
 - Implement the Event Bus to handle the multiple dependecies
 - Would use a [gameplay framework proposal](https://github.com/GiovanniZambiasi/gameplay-framework-unity) to make a better archtecture
